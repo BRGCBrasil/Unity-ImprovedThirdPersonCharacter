@@ -7,7 +7,7 @@ namespace improvedthpc.controller {
     public class ImprovedTHPC : MonoBehaviour {
         
         #region Private Var's
-        private bool m_Jump;
+        private bool m_Crouch;
         private float HorizontalInputValue;
         private float VerticalInputValue;
         private Animator PlayerAnimator;
@@ -23,6 +23,14 @@ namespace improvedthpc.controller {
 #if !MOBILE_INPUT
             HorizontalInputValue = Input.GetAxis("Horizontal");
             VerticalInputValue = Input.GetAxis("Vertical");
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                m_Crouch = true;
+            }
+            else
+            {
+                m_Crouch = false;
+            }
 #else
             HorizontalInputValue = CrossPlatformInputManager.GetAxis("Horizontal");
             VerticalInputValue = CrossPlatformInputManager.GetAxis("Vertical");
@@ -32,6 +40,7 @@ namespace improvedthpc.controller {
             #region Movement
             PlayerAnimator.SetFloat("Forward", VerticalInputValue);
             PlayerAnimator.SetFloat("Turn", HorizontalInputValue);
+            PlayerAnimator.SetBool("Crouch", m_Crouch);
             #endregion
         }
     }
